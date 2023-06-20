@@ -4,7 +4,6 @@ import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -19,7 +18,6 @@ public class PatientRegistrationRequest {
     private String name;  // 환자명
     @NotNull(message = "필수값 genderCode 값이 없습니다.")
     private String genderCode;  // 성별코드
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthDate;  // 생년월일
     private String phoneNumber;  // 휴대전화번호
 
