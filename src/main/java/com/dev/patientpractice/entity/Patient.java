@@ -40,6 +40,9 @@ public class Patient extends BaseEntity {
     @Column(length = 20)
     private String phoneNumber;  // 휴대전화번호
 
+    @Column(nullable = false)
+    private boolean deleted = false;  // 삭제 여부
+
     @Builder
     public Patient(Hospital hospital, String name, String registrationNumber, String genderCode, String birthDate, String phoneNumber) {
         this.hospital = hospital;
