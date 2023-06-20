@@ -38,4 +38,11 @@ public class Visit extends BaseEntity {
         this.receivedAt = receivedAt;
         this.visitStatusCode = visitStatusCode;
     }
+
+    /**
+     * 코드테이블에서 관리하고 있는 방문상태코드 중 '3'은 '취소'를 의미한다.
+     */
+    public void delete() {
+        this.visitStatusCode = "3";
+    }
 }
