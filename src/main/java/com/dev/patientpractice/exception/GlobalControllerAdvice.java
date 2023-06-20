@@ -13,7 +13,7 @@ public class GlobalControllerAdvice {
     public ResponseEntity<?> applicationHandler(PatientApplicationException e) {
         log.error("Error occurs {}", e.toString());
         return ResponseEntity.status(e.getErrorCode().getHttpStatus())
-                .body(Response.error(e.getErrorCode().name()));
+                .body(Response.error(e.getErrorCode().name(), e.getMessage()));
 
     }
 
@@ -21,7 +21,7 @@ public class GlobalControllerAdvice {
     public ResponseEntity<?> applicationHandler(RuntimeException e) {
         log.error("Error occurs {}", e.toString());
         return ResponseEntity.status(ErrorCode.INTERNAL_SERVER_ERROR.getHttpStatus())
-                .body(Response.error(ErrorCode.INTERNAL_SERVER_ERROR.getMessage()));
+                .body(Response.error(ErrorCode.INTERNAL_SERVER_ERROR.name(), ErrorCode.INTERNAL_SERVER_ERROR.getMessage()));
 
     }
 
