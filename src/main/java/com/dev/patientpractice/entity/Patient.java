@@ -1,6 +1,7 @@
 package com.dev.patientpractice.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -39,4 +40,13 @@ public class Patient extends BaseEntity {
     @Column(length = 20)
     private String phoneNumber;  // 휴대전화번호
 
+    @Builder
+    public Patient(Hospital hospital, String name, String registrationNumber, String genderCode, String birthDate, String phoneNumber) {
+        this.hospital = hospital;
+        this.name = name;
+        this.registrationNumber = registrationNumber;
+        this.genderCode = genderCode;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+    }
 }
