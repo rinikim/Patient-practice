@@ -1,4 +1,4 @@
-package com.dev.patientpractice.dto.request;
+package com.dev.patientpractice.dto.request.visit;
 
 
 import com.dev.patientpractice.entity.Hospital;

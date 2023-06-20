@@ -1,6 +1,6 @@
 package com.dev.patientpractice.entity;
 
-import com.dev.patientpractice.dto.request.PatientModificationRequest;
+import com.dev.patientpractice.dto.request.patient.PatientModificationRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.dev.patientpractice.dto.request;
+package com.dev.patientpractice.dto.request.patient;
 
 import lombok.Getter;
 

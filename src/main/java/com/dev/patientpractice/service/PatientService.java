@@ -1,7 +1,7 @@
 package com.dev.patientpractice.service;
 
-import com.dev.patientpractice.dto.request.PatientModificationRequest;
-import com.dev.patientpractice.dto.request.PatientRegistrationRequest;
+import com.dev.patientpractice.dto.request.patient.PatientModificationRequest;
+import com.dev.patientpractice.dto.request.patient.PatientRegistrationRequest;
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
 import com.dev.patientpractice.exception.ErrorCode;
