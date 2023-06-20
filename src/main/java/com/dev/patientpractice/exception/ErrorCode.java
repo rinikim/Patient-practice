@@ -7,8 +7,11 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
-    PATIENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Patient not founded"),
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error");
+
+    INVALID_PARAMETER(HttpStatus.BAD_REQUEST, "파라미터 유효성 에러"),
+    PATIENT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 환자 요청 에러"),
+    HOSPITAL_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 병원 요청 에러"),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "내부 시스템 에러");
 
     private HttpStatus httpStatus;
     private String message;
