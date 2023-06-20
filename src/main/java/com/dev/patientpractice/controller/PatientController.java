@@ -30,5 +30,11 @@ public class PatientController {
         patientService.updatePatient(patientId, body);
         return Response.success(null);
     }
+
+    @DeleteMapping("/{patientId}")
+    public Response deletePatient(@PathVariable Long patientId) {
+        patientService.deletePatient(patientId);
+        return Response.success(null);
+    }
 }
 

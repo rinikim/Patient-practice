@@ -73,4 +73,8 @@ public class Patient extends BaseEntity {
             this.phoneNumber = patient.getPhoneNumber();
         }
     }
+
+    public void delete() {
+        this.deleted = true;
+    }
 }
