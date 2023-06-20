@@ -24,8 +24,10 @@ public class PatientService {
     @Transactional
     public void generatePatient(PatientRegistrationRequest body) {
         String patientNumber = generatePatientRegistrationNumber();
-        Hospital hospital = hospitalRepository.findById(body.getHospitalId())
+
+        Hospital hospital = hospitalRepository.findByIdAndDeleted(body.getHospitalId(), false)
                 .orElseThrow(() -> new PatientApplicationException(ErrorCode.HOSPITAL_NOT_FOUND, String.format("병원 ID: %s", body.getHospitalId())));
+
         Patient patient = body.toEntity(hospital, patientNumber);
         patientRepository.save(patient);
     }
