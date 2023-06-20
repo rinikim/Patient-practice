@@ -1,6 +1,7 @@
 package com.dev.patientpractice.service;
 
 import com.dev.patientpractice.dto.request.visit.VisitCreationRequest;
+import com.dev.patientpractice.dto.request.visit.VisitModificationRequest;
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
 import com.dev.patientpractice.entity.Visit;
@@ -12,11 +13,13 @@ import com.dev.patientpractice.repository.VisitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor
 public class VisitService {
 
+    public static final String VISIT_STATUS_CODE = "방문상태코드";
     private final CodeService codeService;
     private final HospitalRepository hospitalRepository;
     private final PatientRepository patientRepository;
@@ -24,7 +27,7 @@ public class VisitService {
 
     @Transactional
     public void createVisit(VisitCreationRequest body) {
-        codeService.checkCode("방문상태코드", body.getVisitStatusCode());
+        codeService.checkCode(VISIT_STATUS_CODE, body.getVisitStatusCode());
 
         Hospital hospital = hospitalRepository.findByIdAndDeleted(body.getHospitalId(), false)
                 .orElseThrow(() -> new PatientApplicationException(ErrorCode.HOSPITAL_NOT_FOUND, String.format("병원 ID: %s", body.getHospitalId())));
@@ -41,5 +44,20 @@ public class VisitService {
         Visit visit = visitRepository.findById(visitId)
                 .orElseThrow(() -> new PatientApplicationException(ErrorCode.PATIENT_NOT_FOUND, String.format("환자방문 ID: %s", visitId)));
         visit.delete();
+    }
+
+    @Transactional
+    public void updateVisit(Long visitId, VisitModificationRequest body) {
+        if (isExistsVisitStatusCode(body)) {
+            codeService.checkCode(VISIT_STATUS_CODE, body.getVisitStatusCode());
+        }
+
+        Visit visit = visitRepository.findById(visitId)
+                .orElseThrow(() -> new PatientApplicationException(ErrorCode.VISIT_NOT_FOUND, String.format("환자방문 ID: %s", visitId)));
+        visit.update(body);
+    }
+
+    public boolean isExistsVisitStatusCode(VisitModificationRequest body) {
+        return StringUtils.hasText(body.getVisitStatusCode());
     }
 }

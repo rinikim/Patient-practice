@@ -1,6 +1,7 @@
 package com.dev.patientpractice.controller;
 
-import com.dev.patientpractice.dto.request.VisitCreationRequest;
+import com.dev.patientpractice.dto.request.visit.VisitCreationRequest;
+import com.dev.patientpractice.dto.request.visit.VisitModificationRequest;
 import com.dev.patientpractice.dto.response.Response;
 import com.dev.patientpractice.service.VisitService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,13 @@ public class VisitController {
     @PostMapping
     public Response createVisit(@RequestBody @Valid VisitCreationRequest body) {
         visitService.createVisit(body);
+        return Response.success(null);
+    }
+
+    @PatchMapping("/{visitId}")
+    public Response updateVisit(@PathVariable Long visitId,
+                                @RequestBody @Valid VisitModificationRequest body) {
+        visitService.updateVisit(visitId, body);
         return Response.success(null);
     }
 

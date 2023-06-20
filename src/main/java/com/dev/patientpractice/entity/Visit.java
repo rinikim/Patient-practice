@@ -1,12 +1,15 @@
 package com.dev.patientpractice.entity;
 
+import com.dev.patientpractice.dto.request.visit.VisitModificationRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -44,5 +47,15 @@ public class Visit extends BaseEntity {
      */
     public void delete() {
         this.visitStatusCode = "3";
+    }
+
+    public void update(VisitModificationRequest visit) {
+        if (Objects.nonNull(visit.getReceivedAt())) {
+            this.receivedAt = visit.getReceivedAt();
+        }
+
+        if (StringUtils.hasText(visit.getVisitStatusCode())) {
+            this.visitStatusCode = visit.getVisitStatusCode();
+        }
     }
 }
