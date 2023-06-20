@@ -35,4 +35,11 @@ public class VisitService {
         Visit visit = body.toEntity(hospital, patient);
         visitRepository.save(visit);
     }
+
+    @Transactional
+    public void deleteVisit(Long visitId) {
+        Visit visit = visitRepository.findById(visitId)
+                .orElseThrow(() -> new PatientApplicationException(ErrorCode.PATIENT_NOT_FOUND, String.format("환자방문 ID: %s", visitId)));
+        visit.delete();
+    }
 }
