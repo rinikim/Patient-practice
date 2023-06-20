@@ -1,4 +1,4 @@
-package com.dev.patientpractice.dto.request;
+package com.dev.patientpractice.dto.request.patient;
 
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;

@@ -1,7 +1,7 @@
 package com.dev.patientpractice.controller;
 
-import com.dev.patientpractice.dto.request.PatientModificationRequest;
-import com.dev.patientpractice.dto.request.PatientRegistrationRequest;
+import com.dev.patientpractice.dto.request.patient.PatientModificationRequest;
+import com.dev.patientpractice.dto.request.patient.PatientRegistrationRequest;
 import com.dev.patientpractice.dto.response.Response;
 import com.dev.patientpractice.service.PatientService;
 import lombok.RequiredArgsConstructor;

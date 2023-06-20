@@ -1,6 +1,6 @@
 package com.dev.patientpractice.service;
 
-import com.dev.patientpractice.dto.request.VisitCreationRequest;
+import com.dev.patientpractice.dto.request.visit.VisitCreationRequest;
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
 import com.dev.patientpractice.entity.Visit;
