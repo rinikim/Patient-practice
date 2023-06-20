@@ -29,4 +29,7 @@ public class Hospital extends BaseEntity {
     @Column(nullable = false, length = 10)
     private String directorName;  // 병원장명
 
+    @Column(nullable = false)
+    private boolean deleted = false;  // 삭제 여부
+
 }
