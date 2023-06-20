@@ -1,13 +1,16 @@
 package com.dev.patientpractice.entity;
 
+import com.dev.patientpractice.dto.request.PatientModificationRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -51,5 +54,23 @@ public class Patient extends BaseEntity {
         this.genderCode = genderCode;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
+    }
+
+    public void update(PatientModificationRequest patient) {
+        if (StringUtils.hasText(patient.getName())) {
+            this.name = patient.getName();
+        }
+
+        if (StringUtils.hasText(patient.getGenderCode())) {
+            this.genderCode = patient.getGenderCode();
+        }
+
+        if (Objects.nonNull(patient.getBirthDate())) {
+            this.birthDate = patient.getBirthDate().toString();
+        }
+
+        if (StringUtils.hasText(patient.getPhoneNumber())) {
+            this.phoneNumber = patient.getPhoneNumber();
+        }
     }
 }
