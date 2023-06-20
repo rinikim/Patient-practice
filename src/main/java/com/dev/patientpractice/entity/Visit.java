@@ -1,6 +1,7 @@
 package com.dev.patientpractice.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,12 @@ public class Visit extends BaseEntity {
 
     @Column(nullable = false, length = 10)
     private String visitStatusCode;  // 방문상태코드
+
+    @Builder
+    public Visit(Hospital hospital, Patient patient, LocalDateTime receivedAt, String visitStatusCode) {
+        this.hospital = hospital;
+        this.patient = patient;
+        this.receivedAt = receivedAt;
+        this.visitStatusCode = visitStatusCode;
+    }
 }
