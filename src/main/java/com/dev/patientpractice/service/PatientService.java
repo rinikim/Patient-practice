@@ -51,4 +51,11 @@ public class PatientService {
                 .orElseThrow(() -> new PatientApplicationException(ErrorCode.PATIENT_NOT_FOUND, String.format("환자 ID: %s", patientId)));
         patient.update(body);
     }
+
+    @Transactional
+    public void deletePatient(Long patientId) {
+        Patient patient = patientRepository.findByIdAndDeleted(patientId, false)
+                .orElseThrow(() -> new PatientApplicationException(ErrorCode.PATIENT_NOT_FOUND, String.format("환자 ID: %s", patientId)));
+        patient.delete();
+    }
 }
