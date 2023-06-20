@@ -1,5 +1,6 @@
 package com.dev.patientpractice.service;
 
+import com.dev.patientpractice.dto.request.PatientModificationRequest;
 import com.dev.patientpractice.dto.request.PatientRegistrationRequest;
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
@@ -42,5 +43,12 @@ public class PatientService {
     private int GetSerialNumbersByYear(int currentYear) {
         int sequentialNumber = patientRepository.countByCreatedAtYear(currentYear);
         return sequentialNumber + 1;
+    }
+
+    @Transactional
+    public void updatePatient(Long patientId, PatientModificationRequest body) {
+        Patient patient = patientRepository.findByIdAndDeleted(patientId, false)
+                .orElseThrow(() -> new PatientApplicationException(ErrorCode.PATIENT_NOT_FOUND, String.format("환자 ID: %s", patientId)));
+        patient.update(body);
     }
 }
