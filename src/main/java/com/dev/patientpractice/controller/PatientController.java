@@ -5,12 +5,10 @@ import com.dev.patientpractice.dto.request.PatientRegistrationRequest;
 import com.dev.patientpractice.dto.response.Response;
 import com.dev.patientpractice.service.PatientService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Slf4j
 @RequestMapping("/v1/patients")
 @RequiredArgsConstructor
 @RestController

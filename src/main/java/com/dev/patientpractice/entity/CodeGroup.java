@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class CodeGroup extends BaseEntity {
+public class CodeGroup {
 
     @Id
     @Column(name = "code_group", nullable = false, length = 10)
