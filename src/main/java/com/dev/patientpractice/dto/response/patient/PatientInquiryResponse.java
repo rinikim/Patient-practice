@@ -24,6 +24,7 @@ public class PatientInquiryResponse {
     private String birthDate;  // 생년월일
     private String phoneNumber;  // 휴대전화번호
     private HospitalResponse hospital;  // 병원
+    @Builder.Default
     private List<VisitResponse> visits = new ArrayList<>();  // 환자방문
 
     public static PatientInquiryResponse from(Patient patient) {
