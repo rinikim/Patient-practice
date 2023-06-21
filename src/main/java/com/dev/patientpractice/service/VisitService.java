@@ -2,7 +2,7 @@ package com.dev.patientpractice.service;
 
 import com.dev.patientpractice.dto.request.visit.VisitCreationRequest;
 import com.dev.patientpractice.dto.request.visit.VisitModificationRequest;
-import com.dev.patientpractice.dto.response.visit.VisitResponse;
+import com.dev.patientpractice.dto.response.visit.VisitInquiryResponse;
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
 import com.dev.patientpractice.entity.Visit;
@@ -70,14 +70,14 @@ public class VisitService {
     }
 
     @Transactional(readOnly = true)
-    public List<VisitResponse> getVisits(Long patientId, Pageable pageable) {
+    public List<VisitInquiryResponse> getVisits(Long patientId, Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), Sort.by("id").descending());
         Page<Visit> visits = visitRepository.findAllByPatient_Id(patientId, pageable);
         if (isExistsVisits(visits)) {
             return List.of();
         }
         return visits.getContent().stream()
-                .map(VisitResponse::from)
+                .map(VisitInquiryResponse::from)
                 .toList();
     }
 
