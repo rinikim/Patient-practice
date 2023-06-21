@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -76,7 +75,7 @@ public class PatientService {
     }
 
     @Transactional(readOnly = true)
-    public PatientsInquiryResponse getPatients(int pageNo, int pageSize, PatientsInquiryRequest params) {
-        return patientRepository.findAllByConditions(pageNo, pageSize, params);
+    public PatientsInquiryResponse getPatients(PatientsInquiryRequest params) {
+        return patientRepository.findAllByConditions(params);
     }
 }

@@ -24,11 +24,8 @@ public class PatientController {
     }
 
     @GetMapping
-    public Response getPatients(@RequestParam(defaultValue = "1") int pageNo,
-                                @RequestParam(defaultValue = "10") int pageSize,
-                                PatientsInquiryRequest params) {
-        // TODO pageSize, pageNo를 params 안에 넣어 같이 사용해야되는가?
-        return Response.success(patientService.getPatients(pageNo, pageSize, params));
+    public Response getPatients(@Valid PatientsInquiryRequest params) {
+        return Response.success(patientService.getPatients(params));
     }
 
     @GetMapping("/{patientId}")

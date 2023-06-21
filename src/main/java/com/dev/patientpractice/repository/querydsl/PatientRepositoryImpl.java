@@ -25,11 +25,11 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
     private final JPAQueryFactory factory;
 
     @Override
-    public PatientsInquiryResponse findAllByConditions(int pageNo, int pageSize, PatientsInquiryRequest params) {
+    public PatientsInquiryResponse findAllByConditions(PatientsInquiryRequest params) {
         BooleanBuilder builder = setBuilderByConditions(params);
         long totalCount = getTotalCount(builder);
 
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Pageable pageable = PageRequest.of(params.getPageNo() - 1, params.getPageSize());
         List<PatientInquiry> results = findAllByConditions(pageable, builder);
 
         return PatientsInquiryResponse.of(results, pageable, totalCount);
@@ -63,6 +63,8 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
 
     public BooleanBuilder setBuilderByConditions(PatientsInquiryRequest params) {
         BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(patient.hospital.id.eq(params.getHospitalId()));
 
         if (StringUtils.hasText(params.getName())) {
             builder.and(patient.name.eq(params.getName()));

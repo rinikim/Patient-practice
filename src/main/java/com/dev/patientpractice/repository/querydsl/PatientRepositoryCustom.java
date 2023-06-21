@@ -5,5 +5,5 @@ import com.dev.patientpractice.dto.response.patient.PatientsInquiryResponse;
 
 public interface PatientRepositoryCustom {
 
-    PatientsInquiryResponse findAllByConditions(int pageNo, int pageSize, PatientsInquiryRequest params);
+    PatientsInquiryResponse findAllByConditions(PatientsInquiryRequest params);
 }

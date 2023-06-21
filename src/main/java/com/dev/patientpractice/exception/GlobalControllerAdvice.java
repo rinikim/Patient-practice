@@ -4,6 +4,7 @@ import com.dev.patientpractice.dto.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -21,6 +22,12 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     private ResponseEntity<?> handleMethodArgumentValidException(MethodArgumentNotValidException e) {
+        return ResponseEntity.status(ErrorCode.INVALID_PARAMETER.getHttpStatus())
+                .body(Response.error(ErrorCode.INVALID_PARAMETER.name(), e.getBindingResult().getAllErrors().get(0).getDefaultMessage()));
+    }
+
+    @ExceptionHandler(BindException.class)
+    private ResponseEntity<?> handleBeanPropertyBindingResultException(BindException e) {
         return ResponseEntity.status(ErrorCode.INVALID_PARAMETER.getHttpStatus())
                 .body(Response.error(ErrorCode.INVALID_PARAMETER.name(), e.getBindingResult().getAllErrors().get(0).getDefaultMessage()));
     }
