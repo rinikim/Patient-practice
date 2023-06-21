@@ -53,6 +53,7 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
                         visit.receivedAt.max().as("latestVisit")))
                 .from(patient)
                 .leftJoin(patient.visits, visit)
+                .on(visit.visitStatusCode.in("1", "2"))
                 .where(builder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
