@@ -10,6 +10,10 @@ public class PatientApplicationException extends RuntimeException {
     private ErrorCode errorCode;
     private String message;
 
+    public PatientApplicationException(ErrorCode errorCode) {
+        this.errorCode = errorCode;
+    }
+
     @Override
     public String getMessage() {
         if (message == null) {
