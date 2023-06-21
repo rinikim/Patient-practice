@@ -76,7 +76,7 @@ public class PatientService {
     }
 
     @Transactional(readOnly = true)
-    public List<PatientsInquiryResponse> getPatients(int pageNo, int pageSize, PatientsInquiryRequest params) {
+    public PatientsInquiryResponse getPatients(int pageNo, int pageSize, PatientsInquiryRequest params) {
         return patientRepository.findAllByConditions(pageNo, pageSize, params);
     }
 }

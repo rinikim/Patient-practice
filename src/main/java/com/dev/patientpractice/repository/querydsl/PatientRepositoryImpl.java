@@ -1,9 +1,8 @@
 package com.dev.patientpractice.repository.querydsl;
 
+import com.dev.patientpractice.dto.request.patient.PatientInquiry;
 import com.dev.patientpractice.dto.request.patient.PatientsInquiryRequest;
 import com.dev.patientpractice.dto.response.patient.PatientsInquiryResponse;
-import com.dev.patientpractice.exception.ErrorCode;
-import com.dev.patientpractice.exception.PatientApplicationException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -26,12 +25,26 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
     private final JPAQueryFactory factory;
 
     @Override
-    public List<PatientsInquiryResponse> findAllByConditions(int pageNo, int pageSize, PatientsInquiryRequest params) {
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        BooleanBuilder builder = setBuilder(params);
+    public PatientsInquiryResponse findAllByConditions(int pageNo, int pageSize, PatientsInquiryRequest params) {
+        BooleanBuilder builder = setBuilderByConditions(params);
+        long totalCount = getTotalCount(builder);
 
-        List<PatientsInquiryResponse> results = factory
-                .select(Projections.constructor(PatientsInquiryResponse.class,
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<PatientInquiry> results = findAllByConditions(pageable, builder);
+
+        return PatientsInquiryResponse.of(results, pageable, totalCount);
+    }
+
+    public int getTotalCount(BooleanBuilder builder) {
+        return factory.select(patient.id)
+                .from(patient)
+                .where(builder)
+                .fetch().size();
+    }
+
+    public List<PatientInquiry> findAllByConditions(Pageable pageable, BooleanBuilder builder) {
+        return factory
+                .select(Projections.constructor(PatientInquiry.class,
                         patient.name.as("name"),
                         patient.registrationNumber.as("registrationNumber"),
                         patient.genderCode.as("genderCode"),
@@ -46,17 +59,9 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
                 .orderBy(patient.id.desc())
                 .groupBy(patient.id)
                 .fetch();
-
-        // TODO 페이지관련 데이터 처리
-
-        if (results.isEmpty()) {
-            throw new PatientApplicationException(ErrorCode.PATIENT_NOT_FOUND);
-        }
-
-        return results;
     }
 
-    public BooleanBuilder setBuilder(PatientsInquiryRequest params) {
+    public BooleanBuilder setBuilderByConditions(PatientsInquiryRequest params) {
         BooleanBuilder builder = new BooleanBuilder();
 
         if (StringUtils.hasText(params.getName())) {
