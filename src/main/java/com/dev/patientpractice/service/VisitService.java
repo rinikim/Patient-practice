@@ -74,7 +74,7 @@ public class VisitService {
         pageable = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), Sort.by("id").descending());
         Page<Visit> visits = visitRepository.findAllByPatient_Id(patientId, pageable);
         if (isExistsVisits(visits)) {
-            throw new PatientApplicationException(ErrorCode.VISIT_NOT_FOUND, String.format("환자 ID: %s", patientId));
+            return List.of();
         }
         return visits.getContent().stream()
                 .map(VisitResponse::from)
