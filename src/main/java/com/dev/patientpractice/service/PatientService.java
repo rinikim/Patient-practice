@@ -2,6 +2,7 @@ package com.dev.patientpractice.service;
 
 import com.dev.patientpractice.dto.request.patient.PatientModificationRequest;
 import com.dev.patientpractice.dto.request.patient.PatientRegistrationRequest;
+import com.dev.patientpractice.dto.response.patient.PatientInquiryResponse;
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
 import com.dev.patientpractice.exception.ErrorCode;
@@ -43,7 +44,7 @@ public class PatientService {
         return currentYear + formattedSerialNumber;
     }
 
-    private int getSerialNumbersByYear(int currentYear) {
+    public int getSerialNumbersByYear(int currentYear) {
         int sequentialNumber = patientRepository.countByCreatedAtYear(currentYear);
         return sequentialNumber + 1;
     }
@@ -62,5 +63,12 @@ public class PatientService {
         Patient patient = patientRepository.findByIdAndDeleted(patientId, false)
                 .orElseThrow(() -> new PatientApplicationException(ErrorCode.PATIENT_NOT_FOUND, String.format("환자 ID: %s", patientId)));
         patient.delete();
+    }
+
+    @Transactional(readOnly = true)
+    public PatientInquiryResponse getPatient(Long patientId) {
+        Patient patient = patientRepository.findByIdAndDeleted(patientId, false)
+                .orElseThrow(() -> new PatientApplicationException(ErrorCode.PATIENT_NOT_FOUND, String.format("환자 ID: %s", patientId)));
+        return PatientInquiryResponse.from(patient);
     }
 }

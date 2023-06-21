@@ -22,6 +22,11 @@ public class PatientController {
         return Response.success(null);
     }
 
+    @GetMapping("/{patientId}")
+    public Response getPatient(@PathVariable Long patientId) {
+        return Response.success(patientService.getPatient(patientId));
+    }
+
     @PatchMapping("/{patientId}")
     public Response updatePatient(@PathVariable Long patientId,
                                   @RequestBody @Valid PatientModificationRequest body) {
