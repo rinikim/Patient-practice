@@ -3,6 +3,7 @@ package com.dev.patientpractice.dto.response.patient;
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
 import com.dev.patientpractice.entity.Visit;
+import com.dev.patientpractice.utils.DateUtils;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -70,13 +71,13 @@ public class PatientInquiryResponse {
     @NoArgsConstructor
     public static class VisitResponse {
         private Long id;  // 환자방문 ID
-        private LocalDateTime receivedAt;  // 접수일시
+        private String receivedAt;  // 접수일시
         private String visitStatusCode;  // 방문상태코드
 
         public static VisitResponse from(Visit visit) {
             return VisitResponse.builder()
                     .id(visit.getId())
-                    .receivedAt(visit.getReceivedAt())
+                    .receivedAt(DateUtils.formatLocalDateTime(visit.getReceivedAt(), "yyyy-MM-dd HH:mm:ss"))
                     .visitStatusCode(visit.getVisitStatusCode())
                     .build();
         }
