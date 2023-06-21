@@ -25,6 +25,7 @@ public class Patient extends BaseEntity {
     @JoinColumn(name = "hospital_id", nullable = false)
     private Hospital hospital;  // 병원
 
+    @OrderBy("id DESC")
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Visit> visits = new ArrayList<>();  // 환자방문
 
