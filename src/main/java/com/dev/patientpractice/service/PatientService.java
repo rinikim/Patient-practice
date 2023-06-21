@@ -34,20 +34,20 @@ public class PatientService {
         Hospital hospital = hospitalRepository.findByIdAndDeleted(body.getHospitalId(), false)
                 .orElseThrow(() -> new PatientApplicationException(ErrorCode.HOSPITAL_NOT_FOUND, String.format("병원 ID: %s", body.getHospitalId())));
 
-        String patientNumber = generatePatientRegistrationNumber();
+        String patientNumber = generatePatientRegistrationNumber(body.getHospitalId());
         Patient patient = body.toEntity(hospital, patientNumber);
         patientRepository.save(patient);
     }
 
-    public String generatePatientRegistrationNumber() {
+    public String generatePatientRegistrationNumber(Long hospitalId) {
         int currentYear = LocalDateTime.now(ZoneId.of("Asia/Seoul")).getYear();
-        int yearlySerialNumber = getSerialNumbersByYear(currentYear);
+        int yearlySerialNumber = getSerialNumbersByYear(hospitalId, currentYear);
         String formattedSerialNumber = String.format("%06d", yearlySerialNumber);
         return currentYear + formattedSerialNumber;
     }
 
-    public int getSerialNumbersByYear(int currentYear) {
-        int sequentialNumber = patientRepository.countByCreatedAtYear(currentYear);
+    public int getSerialNumbersByYear(Long hospitalId, int currentYear) {
+        int sequentialNumber = patientRepository.countPatientsByYearAndHospitalId(hospitalId, currentYear);
         return sequentialNumber + 1;
     }
 
