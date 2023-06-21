@@ -14,6 +14,11 @@ import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Table(indexes = {
+        @Index(name = "idx_name", columnList = "name"),
+        @Index(name = "idx_registration_number", columnList = "registrationNumber"),
+        @Index(name = "idx_birth_date", columnList = "birthDate")
+})
 @Entity
 public class Patient extends BaseEntity {
 

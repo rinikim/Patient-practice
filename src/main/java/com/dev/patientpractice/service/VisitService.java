@@ -2,7 +2,7 @@ package com.dev.patientpractice.service;
 
 import com.dev.patientpractice.dto.request.visit.VisitCreationRequest;
 import com.dev.patientpractice.dto.request.visit.VisitModificationRequest;
-import com.dev.patientpractice.dto.response.visit.VisitResponse;
+import com.dev.patientpractice.dto.response.visit.VisitInquiryResponse;
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
 import com.dev.patientpractice.entity.Visit;
@@ -70,18 +70,9 @@ public class VisitService {
     }
 
     @Transactional(readOnly = true)
-    public List<VisitResponse> getVisits(Long patientId, Pageable pageable) {
-        pageable = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), Sort.by("id").descending());
+    public VisitInquiryResponse getVisits(Long patientId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("id").descending());
         Page<Visit> visits = visitRepository.findAllByPatient_Id(patientId, pageable);
-        if (isExistsVisits(visits)) {
-            throw new PatientApplicationException(ErrorCode.VISIT_NOT_FOUND, String.format("환자 ID: %s", patientId));
-        }
-        return visits.getContent().stream()
-                .map(VisitResponse::from)
-                .toList();
-    }
-
-    public boolean isExistsVisits(Page<Visit> visits) {
-        return Objects.isNull(visits.getContent()) || visits.getContent().isEmpty();
+        return VisitInquiryResponse.of(visits.getContent(), pageable, visits.getTotalElements());
     }
 }
