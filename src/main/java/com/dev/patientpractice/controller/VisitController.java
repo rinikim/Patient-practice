@@ -5,6 +5,8 @@ import com.dev.patientpractice.dto.request.visit.VisitModificationRequest;
 import com.dev.patientpractice.dto.response.Response;
 import com.dev.patientpractice.service.VisitService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,6 +22,12 @@ public class VisitController {
     public Response createVisit(@RequestBody @Valid VisitCreationRequest body) {
         visitService.createVisit(body);
         return Response.success(null);
+    }
+
+    @GetMapping("/patients/{patientId}")
+    public Response getVisits(@PathVariable Long patientId,
+                              @PageableDefault(page = 1) Pageable pageable) {
+        return Response.success(visitService.getVisits(patientId, pageable));
     }
 
     @PatchMapping("/{visitId}")

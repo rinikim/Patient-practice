@@ -2,6 +2,7 @@ package com.dev.patientpractice.service;
 
 import com.dev.patientpractice.dto.request.visit.VisitCreationRequest;
 import com.dev.patientpractice.dto.request.visit.VisitModificationRequest;
+import com.dev.patientpractice.dto.response.visit.VisitResponse;
 import com.dev.patientpractice.entity.Hospital;
 import com.dev.patientpractice.entity.Patient;
 import com.dev.patientpractice.entity.Visit;
@@ -11,9 +12,16 @@ import com.dev.patientpractice.repository.HospitalRepository;
 import com.dev.patientpractice.repository.PatientRepository;
 import com.dev.patientpractice.repository.VisitRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -59,5 +67,21 @@ public class VisitService {
 
     public boolean isExistsVisitStatusCode(VisitModificationRequest body) {
         return StringUtils.hasText(body.getVisitStatusCode());
+    }
+
+    @Transactional(readOnly = true)
+    public List<VisitResponse> getVisits(Long patientId, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), Sort.by("id").descending());
+        Page<Visit> visits = visitRepository.findAllByPatient_Id(patientId, pageable);
+        if (isExistsVisits(visits)) {
+            throw new PatientApplicationException(ErrorCode.VISIT_NOT_FOUND, String.format("환자 ID: %s", patientId));
+        }
+        return visits.getContent().stream()
+                .map(VisitResponse::from)
+                .toList();
+    }
+
+    public boolean isExistsVisits(Page<Visit> visits) {
+        return Objects.isNull(visits.getContent()) || visits.getContent().isEmpty();
     }
 }
