@@ -1,6 +1,7 @@
 package com.dev.patientpractice.dto.request.patient;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -14,5 +15,6 @@ public class PatientsInquiryRequest {
     private Long hospitalId;  // 병원 ID
     private String name;  // 환자명
     private String registrationNumber;  // 환자등록번호
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthDate;  // 생년월일
 }
