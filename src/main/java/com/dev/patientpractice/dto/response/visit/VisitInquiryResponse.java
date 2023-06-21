@@ -1,28 +1,30 @@
 package com.dev.patientpractice.dto.response.visit;
 
+import com.dev.patientpractice.dto.response.PageResponse;
 import com.dev.patientpractice.entity.Visit;
-import com.dev.patientpractice.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 @Builder
 @Getter
 @AllArgsConstructor
 public class VisitInquiryResponse {
-    private Long id;  // 환자방문ID
-    private Long hospitalId;  // 병원ID
-    private Long patientId;  // 환자ID
-    private String receivedAt;  // 접수일시
-    private String visitStatusCode;  // 방문상태코드
 
-    public static VisitInquiryResponse from(Visit visit) {
+    private List<VisitInquiry> visits;  // 환자방문 데이터
+    private PageResponse page;  // 페이지
+
+    public static VisitInquiryResponse of(List<Visit> visits, Pageable pageable, long totalCount) {
         return VisitInquiryResponse.builder()
-                .id(visit.getId())
-                .hospitalId(visit.getHospital().getId())
-                .patientId(visit.getPatient().getId())
-                .receivedAt(DateUtils.formatLocalDateTime(visit.getReceivedAt(), "yyyy-MM-dd HH:mm:ss"))
-                .visitStatusCode(visit.getVisitStatusCode())
+                .visits(visits.stream()
+                        .map(VisitInquiry::of)
+                        .toList())
+                .page(PageResponse.of(pageable, totalCount))
                 .build();
     }
+
+
 }

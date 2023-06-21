@@ -26,8 +26,9 @@ public class VisitController {
 
     @GetMapping("/patients/{patientId}")
     public Response getVisits(@PathVariable Long patientId,
-                              @PageableDefault(page = 1) Pageable pageable) {
-        return Response.success(visitService.getVisits(patientId, pageable));
+                              @RequestParam(defaultValue = "1") int pageNo,
+                              @RequestParam(defaultValue = "10") int pageSize) {
+        return Response.success(visitService.getVisits(patientId, pageNo, pageSize));
     }
 
     @PatchMapping("/{visitId}")

@@ -70,18 +70,9 @@ public class VisitService {
     }
 
     @Transactional(readOnly = true)
-    public List<VisitInquiryResponse> getVisits(Long patientId, Pageable pageable) {
-        pageable = PageRequest.of(pageable.getPageNumber() - 1, pageable.getPageSize(), Sort.by("id").descending());
+    public VisitInquiryResponse getVisits(Long patientId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("id").descending());
         Page<Visit> visits = visitRepository.findAllByPatient_Id(patientId, pageable);
-        if (isExistsVisits(visits)) {
-            return List.of();
-        }
-        return visits.getContent().stream()
-                .map(VisitInquiryResponse::from)
-                .toList();
-    }
-
-    public boolean isExistsVisits(Page<Visit> visits) {
-        return Objects.isNull(visits.getContent()) || visits.getContent().isEmpty();
+        return VisitInquiryResponse.of(visits.getContent(), pageable, visits.getTotalElements());
     }
 }
