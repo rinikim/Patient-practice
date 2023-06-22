@@ -1,0 +1,16 @@
+= PATIENT API DOCUMENT
+
+[[resources-patient]]
+== 환자 API
+
+
+
+[[resources-post-patient]]
+=== 환자 등록
+
+.HTTP request
+include::{snippets}/post-patient/http-request.adoc[]
+include::{snippets}/post-patient/request-fields.adoc[]
+.HTTP response
+include::{snippets}/post-patient/response-body.adoc[]
+include::{snippets}/post-patient/response-fields.adoc[]
