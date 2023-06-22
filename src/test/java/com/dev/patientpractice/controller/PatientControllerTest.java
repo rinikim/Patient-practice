@@ -195,6 +195,27 @@ public class PatientControllerTest {
                 ));
     }
 
+    @Order(5)
+    @DisplayName("환자삭제")
+    @Test
+    public void deletePatient() throws Exception {
+        Long patientId = 1L;
+
+        mockMvc.perform(RestDocumentationRequestBuilders.delete("/v1/patients/{patientId}", patientId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("delete-patient",
+                        pathParameters(
+                                parameterWithName("patientId").description("환자 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("resultCode").type(JsonFieldType.STRING).description("결과")
+                        )
+                ));
+    }
+
 
 
     public PatientModificationRequest updatePatientFixture() {
