@@ -49,7 +49,7 @@ public class VisitService {
 
     @Transactional
     public void deleteVisit(Long visitId) {
-        Visit visit = visitRepository.findById(visitId)
+        Visit visit = visitRepository.findByIdAndVisitStatusCodeIn(visitId, List.of("1", "2"))
                 .orElseThrow(() -> new PatientApplicationException(ErrorCode.PATIENT_NOT_FOUND, String.format("환자방문 ID: %s", visitId)));
         visit.delete();
     }
@@ -60,7 +60,7 @@ public class VisitService {
             codeService.checkCode(VISIT_STATUS_CODE, body.getVisitStatusCode());
         }
 
-        Visit visit = visitRepository.findById(visitId)
+        Visit visit = visitRepository.findByIdAndVisitStatusCodeIn(visitId, List.of("1", "2"))
                 .orElseThrow(() -> new PatientApplicationException(ErrorCode.VISIT_NOT_FOUND, String.format("환자방문 ID: %s", visitId)));
         visit.update(body);
     }
