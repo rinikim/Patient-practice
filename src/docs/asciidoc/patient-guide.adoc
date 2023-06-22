@@ -22,3 +22,14 @@ include::{snippets}/patch-patient/request-fields.adoc[]
 .HTTP response
 include::{snippets}/patch-patient/response-body.adoc[]
 include::{snippets}/patch-patient/response-fields.adoc[]
+
+
+[[resources-post-patient]]
+=== 환자 조회
+.HTTP request
+include::{snippets}/get-patient/http-request.adoc[]
+include::{snippets}/get-patient/path-parameters.adoc[]
+
+.HTTP response
+include::{snippets}/get-patient/response-body.adoc[]
+include::{snippets}/get-patient/response-fields.adoc[]
