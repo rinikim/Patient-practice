@@ -65,7 +65,8 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
     public BooleanBuilder setBuilderByConditions(PatientsInquiryRequest params) {
         BooleanBuilder builder = new BooleanBuilder();
 
-        builder.and(patient.hospital.id.eq(params.getHospitalId()));
+        builder.and(patient.hospital.id.eq(params.getHospitalId()))
+                .and(patient.deleted.eq(false));
 
         if (StringUtils.hasText(params.getName())) {
             builder.and(patient.name.eq(params.getName()));
