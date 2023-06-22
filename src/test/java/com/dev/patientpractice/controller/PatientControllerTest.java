@@ -183,6 +183,9 @@ public class PatientControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("patch-patient",
+                        pathParameters(
+                                parameterWithName("patientId").description("환자 ID")
+                        ),
                         requestFields(
                                 fieldWithPath("name").optional().type(JsonFieldType.STRING).description("환자명"),
                                 fieldWithPath("genderCode").optional().type(JsonFieldType.STRING).description("성별코드"),

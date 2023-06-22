@@ -18,6 +18,7 @@ include::{snippets}/post-patient/response-fields.adoc[]
 
 .HTTP request
 include::{snippets}/patch-patient/http-request.adoc[]
+include::{snippets}/patch-patient/path-parameters.adoc[]
 include::{snippets}/patch-patient/request-fields.adoc[]
 
 .HTTP response

@@ -545,6 +545,25 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /v1/patients/{patientId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>patientId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">환자 ID</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -747,7 +766,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /v1/patients/{patientId}</caption>
+<caption class="title">Table 2. /v1/patients/{patientId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -768,7 +787,7 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="title">HTTP response</div>
 <div class="content">
-<pre class="highlight nowrap"><code>{"resultCode":"SUCCESS","result":{"patientId":1,"name":"홍길동","registrationNumber":"2023000001","genderCode":"M","birthDate":"1990-01-01","phoneNumber":"010-1111-1111","hospital":{"id":1,"name":"사랑병원","careFacilityNumber":"230620-23db3b2f995b","directorName":"김병원장"},"visits":[{"id":1,"receivedAt":"2023-06-22 15:29:43","visitStatusCode":"1"}]}}</code></pre>
+<pre class="highlight nowrap"><code>{"resultCode":"SUCCESS","result":{"patientId":1,"name":"홍길동","registrationNumber":"2023000001","genderCode":"M","birthDate":"1990-01-01","phoneNumber":"010-1111-1111","hospital":{"id":1,"name":"사랑병원","careFacilityNumber":"230620-23db3b2f995b","directorName":"김병원장"},"visits":[{"id":1,"receivedAt":"2023-06-22 15:32:34","visitStatusCode":"1"}]}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -870,7 +889,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. /v1/patients/{patientId}</caption>
+<caption class="title">Table 3. /v1/patients/{patientId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -922,7 +941,7 @@ Host: localhost:8080</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-22 15:29:29 +0900
+Last updated 2023-06-22 15:32:15 +0900
 </div>
 </div>
 </body>
