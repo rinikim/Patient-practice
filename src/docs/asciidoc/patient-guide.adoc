@@ -3,8 +3,6 @@
 [[resources-patient]]
 == 환자 API
 
-
-
 [[resources-post-patient]]
 === 환자 등록
 
@@ -14,3 +12,13 @@ include::{snippets}/post-patient/request-fields.adoc[]
 .HTTP response
 include::{snippets}/post-patient/response-body.adoc[]
 include::{snippets}/post-patient/response-fields.adoc[]
+
+[[resources-post-patient]]
+=== 환자 수정
+
+.HTTP request
+include::{snippets}/patch-patient/http-request.adoc[]
+include::{snippets}/patch-patient/request-fields.adoc[]
+.HTTP response
+include::{snippets}/patch-patient/response-body.adoc[]
+include::{snippets}/patch-patient/response-fields.adoc[]
