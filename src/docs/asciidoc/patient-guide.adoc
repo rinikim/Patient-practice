@@ -13,7 +13,7 @@ include::{snippets}/post-patient/request-fields.adoc[]
 include::{snippets}/post-patient/response-body.adoc[]
 include::{snippets}/post-patient/response-fields.adoc[]
 
-[[resources-post-patient]]
+[[resources-patch-patient]]
 === 환자 수정
 
 .HTTP request
@@ -23,8 +23,17 @@ include::{snippets}/patch-patient/request-fields.adoc[]
 include::{snippets}/patch-patient/response-body.adoc[]
 include::{snippets}/patch-patient/response-fields.adoc[]
 
+[[resources-get-patients]]
+=== 환자 목록조회
+.HTTP request
+include::{snippets}/get-patients/http-request.adoc[]
+include::{snippets}/get-patients/request-parameters.adoc[]
 
-[[resources-post-patient]]
+.HTTP response
+include::{snippets}/get-patients/response-body.adoc[]
+include::{snippets}/get-patients/response-fields.adoc[]
+
+[[resources-get-patient]]
 === 환자 조회
 .HTTP request
 include::{snippets}/get-patient/http-request.adoc[]
