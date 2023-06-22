@@ -1,0 +1,57 @@
+= PATIENT API DOCUMENT
+
+[[resources-patient]]
+== 환자 API
+
+[[resources-post-patient]]
+=== 환자 등록
+
+.HTTP request
+include::{snippets}/post-patient/http-request.adoc[]
+include::{snippets}/post-patient/request-fields.adoc[]
+.HTTP response
+include::{snippets}/post-patient/response-body.adoc[]
+include::{snippets}/post-patient/response-fields.adoc[]
+
+[[resources-patch-patient]]
+=== 환자 수정
+
+.HTTP request
+include::{snippets}/patch-patient/http-request.adoc[]
+include::{snippets}/patch-patient/path-parameters.adoc[]
+include::{snippets}/patch-patient/request-fields.adoc[]
+
+.HTTP response
+include::{snippets}/patch-patient/response-body.adoc[]
+include::{snippets}/patch-patient/response-fields.adoc[]
+
+[[resources-get-patients]]
+=== 환자 목록조회
+.HTTP request
+include::{snippets}/get-patients/http-request.adoc[]
+include::{snippets}/get-patients/request-parameters.adoc[]
+
+.HTTP response
+include::{snippets}/get-patients/response-body.adoc[]
+include::{snippets}/get-patients/response-fields.adoc[]
+
+[[resources-get-patient]]
+=== 환자 조회
+.HTTP request
+include::{snippets}/get-patient/http-request.adoc[]
+include::{snippets}/get-patient/path-parameters.adoc[]
+
+.HTTP response
+include::{snippets}/get-patient/response-body.adoc[]
+include::{snippets}/get-patient/response-fields.adoc[]
+
+[[resources-delete-patient]]
+=== 환자 삭제
+
+.HTTP request
+include::{snippets}/delete-patient/http-request.adoc[]
+include::{snippets}/delete-patient/path-parameters.adoc[]
+
+.HTTP response
+include::{snippets}/delete-patient/response-body.adoc[]
+include::{snippets}/delete-patient/response-fields.adoc[]

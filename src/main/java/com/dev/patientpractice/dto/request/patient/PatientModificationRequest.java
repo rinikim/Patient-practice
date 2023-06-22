@@ -1,9 +1,11 @@
 package com.dev.patientpractice.dto.request.patient;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
 
+@AllArgsConstructor
 @Getter
 public class PatientModificationRequest {
     private String name;  // 환자명
