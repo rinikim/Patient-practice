@@ -455,10 +455,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /v1/patients HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 107
+Content-Length: 133
 Host: localhost:8080
 
-{"hospitalId":1,"name":"홍길동","genderCode":"M","birthDate":"1990-01-01","phoneNumber":"010-1111-1111"}</code></pre>
+{
+  "hospitalId" : 1,
+  "name" : "홍길동",
+  "genderCode" : "M",
+  "birthDate" : "1990-01-01",
+  "phoneNumber" : "010-1111-1111"
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -505,7 +511,9 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">HTTP response</div>
 <div class="content">
-<pre class="highlight nowrap"><code>{"resultCode":"SUCCESS"}</code></pre>
+<pre class="highlight nowrap"><code>{
+  "resultCode" : "SUCCESS"
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -538,10 +546,15 @@ Host: localhost:8080
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /v1/patients/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 92
+Content-Length: 113
 Host: localhost:8080
 
-{"name":"홍길동","genderCode":"M","birthDate":"1990-01-01","phoneNumber":"010-1111-0110"}</code></pre>
+{
+  "name" : "홍길동",
+  "genderCode" : "M",
+  "birthDate" : "1990-01-01",
+  "phoneNumber" : "010-1111-0110"
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -602,7 +615,9 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">HTTP response</div>
 <div class="content">
-<pre class="highlight nowrap"><code>{"resultCode":"SUCCESS"}</code></pre>
+<pre class="highlight nowrap"><code>{
+  "resultCode" : "SUCCESS"
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -679,7 +694,32 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="title">HTTP response</div>
 <div class="content">
-<pre class="highlight nowrap"><code>{"resultCode":"SUCCESS","result":{"patients":[{"name":"홍길동","registrationNumber":"2023000002","genderCode":"M","birthDate":"1990-01-01","phoneNumber":"010-1111-1111","latestVisit":null},{"name":"홍길동","registrationNumber":"2023000001","genderCode":"M","birthDate":"1990-01-01","phoneNumber":"010-1111-1111","latestVisit":"2023-06-22"}],"page":{"page":1,"size":10,"totalPages":1,"totalCount":2}}}</code></pre>
+<pre class="highlight nowrap"><code>{
+  "resultCode" : "SUCCESS",
+  "result" : {
+    "patients" : [ {
+      "name" : "홍길동",
+      "registrationNumber" : "2023000002",
+      "genderCode" : "M",
+      "birthDate" : "1990-01-01",
+      "phoneNumber" : "010-1111-1111",
+      "latestVisit" : null
+    }, {
+      "name" : "홍길동",
+      "registrationNumber" : "2023000001",
+      "genderCode" : "M",
+      "birthDate" : "1990-01-01",
+      "phoneNumber" : "010-1111-1111",
+      "latestVisit" : "2023-06-22"
+    } ],
+    "page" : {
+      "page" : 1,
+      "size" : 10,
+      "totalPages" : 1,
+      "totalCount" : 2
+    }
+  }
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -787,7 +827,28 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="title">HTTP response</div>
 <div class="content">
-<pre class="highlight nowrap"><code>{"resultCode":"SUCCESS","result":{"patientId":1,"name":"홍길동","registrationNumber":"2023000001","genderCode":"M","birthDate":"1990-01-01","phoneNumber":"010-1111-1111","hospital":{"id":1,"name":"사랑병원","careFacilityNumber":"230620-23db3b2f995b","directorName":"김병원장"},"visits":[{"id":1,"receivedAt":"2023-06-22 15:32:34","visitStatusCode":"1"}]}}</code></pre>
+<pre class="highlight nowrap"><code>{
+  "resultCode" : "SUCCESS",
+  "result" : {
+    "patientId" : 1,
+    "name" : "홍길동",
+    "registrationNumber" : "2023000001",
+    "genderCode" : "M",
+    "birthDate" : "1990-01-01",
+    "phoneNumber" : "010-1111-1111",
+    "hospital" : {
+      "id" : 1,
+      "name" : "사랑병원",
+      "careFacilityNumber" : "230620-23db3b2f995b",
+      "directorName" : "김병원장"
+    },
+    "visits" : [ {
+      "id" : 1,
+      "receivedAt" : "2023-06-22 15:54:02",
+      "visitStatusCode" : "1"
+    } ]
+  }
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -910,7 +971,9 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="title">HTTP response</div>
 <div class="content">
-<pre class="highlight nowrap"><code>{"resultCode":"SUCCESS"}</code></pre>
+<pre class="highlight nowrap"><code>{
+  "resultCode" : "SUCCESS"
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -941,7 +1004,7 @@ Host: localhost:8080</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-06-22 15:32:15 +0900
+Last updated 2023-06-22 15:41:40 +0900
 </div>
 </div>
 </body>
