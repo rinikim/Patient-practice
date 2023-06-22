@@ -29,8 +29,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -72,57 +71,6 @@ public class PatientControllerTest {
     }
 
     @Order(1)
-    @DisplayName("환자생성")
-    @Test
-    public void generatePatient() throws Exception {
-        PatientRegistrationRequest body = createPatientFixture();
-        mockMvc.perform(post("/v1/patients")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(body))
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(document("post-patient",
-                        requestFields(
-                                fieldWithPath("hospitalId").type(JsonFieldType.NUMBER).description("병원 ID"),
-                                fieldWithPath("name").type(JsonFieldType.STRING).description("환자명"),
-                                fieldWithPath("genderCode").type(JsonFieldType.STRING).description("성별코드"),
-                                fieldWithPath("birthDate").type(JsonFieldType.STRING).description("생년월일"),
-                                fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("휴대전화번호")
-                        ),
-                        responseFields(
-                                fieldWithPath("resultCode").type(JsonFieldType.STRING).description("결과")
-                        )
-                ));
-    }
-
-    @Order(2)
-    @DisplayName("환자수정")
-    @Test
-    public void updatePatient() throws Exception {
-        PatientModificationRequest body = updatePatientFixture();
-        Long patientId = 1L;
-
-        mockMvc.perform(patch("/v1/patients/{patientId}", patientId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(body))
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(document("patch-patient",
-                        requestFields(
-                                fieldWithPath("name").type(JsonFieldType.STRING).description("환자명"),
-                                fieldWithPath("genderCode").type(JsonFieldType.STRING).description("성별코드"),
-                                fieldWithPath("birthDate").type(JsonFieldType.STRING).description("생년월일"),
-                                fieldWithPath("phoneNumber").type(JsonFieldType.STRING).description("휴대전화번호")
-                        ),
-                        responseFields(
-                                fieldWithPath("resultCode").type(JsonFieldType.STRING).description("결과")
-                        )
-                ));
-    }
-
-    @Order(3)
     @DisplayName("환자조회")
     @Test
     public void getPatient() throws Exception {
@@ -155,6 +103,99 @@ public class PatientControllerTest {
                         )
                 ));
     }
+
+    @Order(2)
+    @DisplayName("환자목록조회")
+    @Test
+    public void getPatients() throws Exception {
+        Long patientId = 1L;
+
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/v1/patients")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .queryParam("pageNo", "1")
+                        .queryParam("pageSize", "10")
+                        .queryParam("hospitalId", "1")
+                        .queryParam("name", "홍길동")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("get-patients",
+                        requestParameters(
+                                parameterWithName("pageNo").optional().description("페이지 번호 (기본값 : 1)"),
+                                parameterWithName("pageSize").optional().description("페이지 사이즈 (기본값 : 10)"),
+                                parameterWithName("hospitalId").optional().description("병원 ID"),
+                                parameterWithName("name").optional().description("환자명"),
+                                parameterWithName("registrationNumber").optional().description("환자등록번호"),
+                                parameterWithName("birthDate").optional().description("생년월일")
+                        ),
+                        responseFields(
+                                fieldWithPath("resultCode").type(JsonFieldType.STRING).description("결과"),
+                                fieldWithPath("result.patients[].name").type(JsonFieldType.STRING).description("환자명"),
+                                fieldWithPath("result.patients[].registrationNumber").type(JsonFieldType.STRING).description("환자등록번호"),
+                                fieldWithPath("result.patients[].genderCode").type(JsonFieldType.STRING).description("성별"),
+                                fieldWithPath("result.patients[].birthDate").type(JsonFieldType.STRING).description("생년월일"),
+                                fieldWithPath("result.patients[].phoneNumber").type(JsonFieldType.STRING).description("휴대전화번호"),
+                                fieldWithPath("result.patients[].latestVisit").optional().type(JsonFieldType.STRING).description("최근방문"),
+                                fieldWithPath("result.page.page").type(JsonFieldType.NUMBER).description("현제 페이지"),
+                                fieldWithPath("result.page.size").type(JsonFieldType.NUMBER).description("현재 페이지에서 보이는 데이터 수"),
+                                fieldWithPath("result.page.totalPages").type(JsonFieldType.NUMBER).description("전체 페이지 수"),
+                                fieldWithPath("result.page.totalCount").type(JsonFieldType.NUMBER).description("전체 데이터 수")
+                        )
+                ));
+    }
+
+    @Order(3)
+    @DisplayName("환자생성")
+    @Test
+    public void generatePatient() throws Exception {
+        PatientRegistrationRequest body = createPatientFixture();
+        mockMvc.perform(post("/v1/patients")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(body))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("post-patient",
+                        requestFields(
+                                fieldWithPath("hospitalId").type(JsonFieldType.NUMBER).description("병원 ID"),
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("환자명"),
+                                fieldWithPath("genderCode").type(JsonFieldType.STRING).description("성별코드"),
+                                fieldWithPath("birthDate").optional().type(JsonFieldType.STRING).description("생년월일"),
+                                fieldWithPath("phoneNumber").optional().type(JsonFieldType.STRING).description("휴대전화번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("resultCode").type(JsonFieldType.STRING).description("결과")
+                        )
+                ));
+    }
+
+    @Order(4)
+    @DisplayName("환자수정")
+    @Test
+    public void updatePatient() throws Exception {
+        PatientModificationRequest body = updatePatientFixture();
+        Long patientId = 1L;
+
+        mockMvc.perform(patch("/v1/patients/{patientId}", patientId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(body))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("patch-patient",
+                        requestFields(
+                                fieldWithPath("name").optional().type(JsonFieldType.STRING).description("환자명"),
+                                fieldWithPath("genderCode").optional().type(JsonFieldType.STRING).description("성별코드"),
+                                fieldWithPath("birthDate").optional().type(JsonFieldType.STRING).description("생년월일"),
+                                fieldWithPath("phoneNumber").optional().type(JsonFieldType.STRING).description("휴대전화번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("resultCode").type(JsonFieldType.STRING).description("결과")
+                        )
+                ));
+    }
+
+
 
     public PatientModificationRequest updatePatientFixture() {
         return new PatientModificationRequest(
